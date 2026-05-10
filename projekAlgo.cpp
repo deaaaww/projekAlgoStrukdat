@@ -198,15 +198,41 @@ void kelolaData()
         cin >> pilihan;
         switch (pilihan)
         {
-        case 1:
-            tampilData();
-            break;
-        case 2:
-            cariBarang();
-            break;
         case 3:
             tambahData();
             break;
         }
     } while (pilihan != 6);
+}
+
+void tambahData()
+{
+    int jumlah;
+
+    cout << "Jumlah data yang ingin ditambahkan: ";
+    cin >> jumlah;
+
+    for (int i = 0; i < jumlah; i++)
+    {
+        DataBarang *newData = new DataBarang;
+
+        cout << "\nData ke-" << i + 1 << endl;
+        
+        cin.ignore();
+
+        cout << "Masukkan nama barang: ";
+        cin.getline(newData->Data.nama, 1000);
+
+        cout << "Masukkan harga barang: ";
+        cin >> newData->Data.harga;
+
+        cout << "Masukkan stok barang: ";
+        cin >> newData->Data.stok;
+
+        newData->next = head;
+        head = newData;
+
+        saveFile(newData->Data.nama, newData->Data.harga, newData->Data.stok);
+        cout << "Data barang berhasil ditambahkan!" << endl;
+    }
 }
