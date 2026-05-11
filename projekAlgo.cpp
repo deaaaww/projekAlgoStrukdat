@@ -198,9 +198,25 @@ void kelolaData()
         cin >> pilihan;
         switch (pilihan)
         {
+        case 1:
+            tampilData();
+            break;
+        case 2:
+            cariBarang();
+            break;
         case 3:
             tambahData();
             break;
+        case 4:
+            hapusData();
+            break;
+        case 5:
+            updateBarang();
+            break;
+        case 6:
+            break;
+        default:
+            cout << "Pilihan tidak valid, silahakan pilih ulang!" << endl;
         }
     } while (pilihan != 6);
 }
@@ -235,4 +251,48 @@ void tambahData()
         saveFile(newData->Data.nama, newData->Data.harga, newData->Data.stok);
         cout << "Data barang berhasil ditambahkan!" << endl;
     }
+}
+
+void hapusData()
+{
+    if (head == nullptr)
+        return;
+
+    char namaToDelete[1000];
+
+    cout << "Masukkan nama barang yang ingin dihapus: ";
+    cin.ignore();
+    cin.getline(namaToDelete, 1000);
+
+    if (strcmp(head->Data.nama, namaToDelete) == 0)
+    {
+        DataBarang *toDeleteNode = head;
+        head = head->next;
+
+        delete toDeleteNode;
+        cout << "Data berhasil dihapus!\n";
+        return;
+    }
+
+    DataBarang *current = head;
+
+    while (current->next != nullptr && strcmp(current->next->Data.nama, namaToDelete) != 0)
+    {
+        current = current->next;
+    }
+
+    if (current->next == nullptr)
+    {
+        cout << "Barang tidak ditemukan\n";
+        return;
+    }
+
+    DataBarang *toDeleteNode = current->next;
+    current->next = toDeleteNode->next;
+
+    delete toDeleteNode;
+
+    rewriteFile();
+
+    cout << "Data berhasil dihapus!\n";
 }
