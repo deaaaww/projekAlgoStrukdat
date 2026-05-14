@@ -198,12 +198,46 @@ void kelolaData()
         cin >> pilihan;
         switch (pilihan)
         {
+        case 2:
+            cariBarang();
+            break;
         case 3:
             tambahData();
             break;
         }
     } while (pilihan != 6);
 }
+
+void cariBarang()
+{
+    char keyword[1000];
+
+    cout << "Masukkan kata kunci: ";
+    cin.ignore();
+    cin.getline(keyword, 1000);
+
+    DataBarang *current = head;
+    int ketemu = 0;
+
+    cout << "\nHasil pencarian:\n";
+    while (current != nullptr)
+    {
+        // strstr cek apakah keyword ada di dalam nama barang
+        if (strstr(current->Data.nama, keyword) != nullptr)
+        {
+            cout << "Nama\t: " << current->Data.nama << endl;
+            cout << "Harga\t: " << current->Data.harga << endl;
+            cout << "Stok\t: " << current->Data.stok << endl;
+            ketemu++;
+        }
+        current = current->next;
+    }
+
+    if (ketemu == 0)
+        cout << "Barang tidak ditemukan!\n";
+    else
+        cout << ketemu << " barang ditemukan.\n";
+}     
 
 void tambahData()
 {
