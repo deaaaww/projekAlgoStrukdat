@@ -198,14 +198,98 @@ void kelolaData()
         cin >> pilihan;
         switch (pilihan)
         {
+        case 1:
+            tampilData();
+            break;
         case 2:
             cariBarang();
             break;
         case 3:
             tambahData();
             break;
+        case 4:
+            hapusData();
+            break;
+        case 5:
+            updateBarang();
+            break;
+        case 6:
+            break;
+        default:
+            cout << "Pilihan tidak valid, silahakan pilih ulang!" << endl;
         }
     } while (pilihan != 6);
+}
+
+void sorting()
+{
+    DataBarang *i, *j;
+
+    for (i = head; i != NULL; i = i->next)
+    {
+        for (j = i->next; j != NULL; j = j->next)
+        {
+            if (strcmp(i->Data.nama, j->Data.nama) > 0)
+            {
+
+                char tempNama[1000];
+                float tempHarga;
+                int tempStok;
+
+                strcpy(tempNama, i->Data.nama);
+                tempHarga = i->Data.harga;
+                tempStok = i->Data.stok;
+
+                strcpy(i->Data.nama, j->Data.nama);
+                i->Data.harga = j->Data.harga;
+                i->Data.stok = j->Data.stok;
+
+                strcpy(j->Data.nama, tempNama);
+                j->Data.harga = tempHarga;
+                j->Data.stok = tempStok;
+            }
+        }
+    }
+}
+
+void tampilData()
+{
+    sorting();
+
+    DataBarang *bantu = head;
+    if (bantu == NULL)
+    {
+        cout << "Belum ada data barang\n";
+        return;
+    }
+
+    cout << setfill('=') << setw(50) << "" << endl;
+
+    cout << setfill(' ')
+         << "|" << right << setw(30) << "DATA BARANG" << setw(19) << "|" << endl;
+
+    cout << setfill('=') << setw(50) << "" << endl;
+
+    cout << setfill(' ');
+    cout << "|"
+         << left << setw(20) << "Nama" << "|"
+         << setw(13) << "Harga" << "|"
+         << setw(13) << "Stok" << "|" << endl;
+
+    cout << setfill('-') << setw(50) << "" << endl;
+    cout << setfill(' ');
+
+    while (bantu != NULL)
+    {
+        cout << "|"
+             << left << setw(20) << bantu->Data.nama << "|"
+             << setw(13) << bantu->Data.harga << "|"
+             << setw(13) << bantu->Data.stok << "|" << endl;
+
+        bantu = bantu->next;
+    }
+
+    cout << setfill('=') << setw(50) << "" << endl;
 }
 
 void cariBarang()
@@ -269,4 +353,48 @@ void tambahData()
         saveFile(newData->Data.nama, newData->Data.harga, newData->Data.stok);
         cout << "Data barang berhasil ditambahkan!" << endl;
     }
+}
+
+void hapusData()
+{
+    if (head == nullptr)
+        return;
+
+    char namaToDelete[1000];
+
+    cout << "Masukkan nama barang yang ingin dihapus: ";
+    cin.ignore();
+    cin.getline(namaToDelete, 1000);
+
+    if (strcmp(head->Data.nama, namaToDelete) == 0)
+    {
+        DataBarang *toDeleteNode = head;
+        head = head->next;
+
+        delete toDeleteNode;
+        cout << "Data berhasil dihapus!\n";
+        return;
+    }
+
+    DataBarang *current = head;
+
+    while (current->next != nullptr && strcmp(current->next->Data.nama, namaToDelete) != 0)
+    {
+        current = current->next;
+    }
+
+    if (current->next == nullptr)
+    {
+        cout << "Barang tidak ditemukan\n";
+        return;
+    }
+
+    DataBarang *toDeleteNode = current->next;
+    current->next = toDeleteNode->next;
+
+    delete toDeleteNode;
+
+    rewriteFile();
+
+    cout << "Data berhasil dihapus!\n";
 }
