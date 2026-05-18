@@ -106,12 +106,19 @@ void menuUtama()
     int pilihan;
     do
     {
-        cout << "\nSYWALAYAN A" << endl;
-        cout << "1. Transaksi Pelanggan" << endl;
-        cout << "2. Kelola Data Barang" << endl;
-        cout << "3. Keluar" << endl;
+        cout << "\n";
+        cout << setfill('=') << setw(35) << "" << endl;
+        cout << setfill(' ') << "|" << right << setw(22) << "SWALAYAN A" << setw(12) << "|" << endl;
+        cout << setfill('=') << setw(35) << "" << endl;
+        cout << setfill(' ');
+        cout << "| " << left << setw(32) << "1. Transaksi Pelanggan" << "|" << endl;
+        cout << "| " << left << setw(32) << "2. Kelola Data Barang" << "|" << endl;
+        cout << "| " << left << setw(32) << "3. Keluar" << "|" << endl;
+        cout << setfill('=') << setw(35) << "" << endl;
+        cout << setfill(' ');
         cout << "Pilih menu: ";
         cin >> pilihan;
+
         switch (pilihan)
         {
         case 1:
@@ -187,15 +194,22 @@ void kelolaData()
     int pilihan;
     do
     {
-        cout << "\nKELOLA DATA BARANG" << endl;
-        cout << "1. Tampilkan Data Barang" << endl;
-        cout << "2. Cari Data Barang" << endl;
-        cout << "3. Tambah Data Barang" << endl;
-        cout << "4. Hapus Data Barang" << endl;
-        cout << "5. Update Barang" << endl;
-        cout << "6. Kembali ke Menu Utama" << endl;
+        cout << "\n";
+        cout << setfill('=') << setw(35) << "" << endl;
+        cout << setfill(' ') << "|" << right << setw(26) << "KELOLA DATA BARANG" << setw(8) << "|" << endl;
+        cout << setfill('=') << setw(35) << "" << endl;
+        cout << setfill(' ');
+        cout << "| " << left << setw(32) << "1. Tampilkan Data Barang" << "|" << endl;
+        cout << "| " << left << setw(32) << "2. Cari Data Barang" << "|" << endl;
+        cout << "| " << left << setw(32) << "3. Tambah Data Barang" << "|" << endl;
+        cout << "| " << left << setw(32) << "4. Hapus Data Barang" << "|" << endl;
+        cout << "| " << left << setw(32) << "5. Update Barang" << "|" << endl;
+        cout << "| " << left << setw(32) << "6. Kembali ke Menu Utama" << "|" << endl;
+        cout << setfill('=') << setw(35) << "" << endl;
+        cout << setfill(' ');
         cout << "Pilih menu: ";
         cin >> pilihan;
+        
         switch (pilihan)
         {
         case 1:
@@ -210,9 +224,7 @@ void kelolaData()
         case 4:
             hapusData();
             break;
-        case 5:
-            updateBarang();
-            break;
+        
         case 6:
             break;
         default:

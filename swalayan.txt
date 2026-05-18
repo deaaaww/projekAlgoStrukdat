@@ -1,2 +1,2 @@
+ice cream;5.00;42
 rokok;3.00;56
-ice cream;5.00;45
