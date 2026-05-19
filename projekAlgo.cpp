@@ -164,12 +164,14 @@ void transaksiPelanggan()
         return;
     }
 
+    
+    
     cout << "Harga : " << current->Data.harga << endl;
     cout << "Stok  : " << current->Data.stok << endl;
-
+    
     cout << "Jumlah beli: ";
     cin >> jumlah;
-
+    
     if (jumlah > current->Data.stok)
     {
         cout << "Stok tidak cukup!\n";
@@ -181,12 +183,21 @@ void transaksiPelanggan()
 
     rewriteFile();
 
-    cout << "\n=== STRUK ===\n";
-    cout << "Nama   : " << current->Data.nama << endl;
-    cout << "Jumlah : " << jumlah << endl;
-    cout << "Total  : " << total << endl;
+    cout << "\n";
+    cout << "========== STRUK BELANJA ==========\n" << endl;
+    cout << setfill(' ');
+    cout << "-----------------------------------\n";
+    cout << "| " << left << setw(32) << "           SWALAYAN A" << "|\n";
+    cout << "-----------------------------------\n";
+    cout << "| " << left << setw(8) << "Nama" << ": " << setw(22) << current->Data.nama << "|\n",
+    cout << "| " << left << setw(8) << "Harga" << ": " << setw(22) << current->Data.harga << "|\n",
+    cout << "| " << left << setw(8) << "Jumlah" << ": " << setw(22) << jumlah << "|\n",
+    cout << "-----------------------------------\n";
+    cout << "| " << "TOTAL  : " << left << setw(23) << total                                  << "|" << endl;
+    cout << "===================================\n";
+    cout << setfill(' ');
 
-    cout << "\nTransaksi berhasil!\n";
+    cout << "Transaksi berhasil!\n\n";
 }
 
 void kelolaData()
