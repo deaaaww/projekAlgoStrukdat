@@ -106,6 +106,7 @@ void menuUtama()
     int pilihan;
     do
     {
+        system("cls");
         cout << "\n";
         cout << setfill('=') << setw(35) << "" << endl;
         cout << setfill(' ') << "|" << right << setw(22) << "SWALAYAN A" << setw(12) << "|" << endl;
@@ -123,9 +124,13 @@ void menuUtama()
         {
         case 1:
             transaksiPelanggan();
+            system("pause");
+            system("cls");
             break;
         case 2:
             kelolaData();
+            system("pause");
+            system("cls");
             break;
         case 3:
             cout << "Program telah keluar" << endl;
@@ -138,11 +143,14 @@ void menuUtama()
 
 void transaksiPelanggan()
 {
+    system("cls");
     if (head == nullptr)
     {
         cout << "Data barang kosong!\n";
         return;
     }
+
+    tampilData();
 
     char nama[1000];
     int jumlah;
@@ -165,7 +173,7 @@ void transaksiPelanggan()
     }
 
     
-    
+
     cout << "Harga : " << current->Data.harga << endl;
     cout << "Stok  : " << current->Data.stok << endl;
     
@@ -205,6 +213,7 @@ void kelolaData()
     int pilihan;
     do
     {
+        system("cls");
         cout << "\n";
         cout << setfill('=') << setw(35) << "" << endl;
         cout << setfill(' ') << "|" << right << setw(26) << "KELOLA DATA BARANG" << setw(8) << "|" << endl;
@@ -225,17 +234,28 @@ void kelolaData()
         {
         case 1:
             tampilData();
+            system("pause");
+            system("cls");
             break;
         case 2:
             cariBarang();
+            system("pause");
             break;
         case 3:
             tambahData();
+            system("pause");
+            system("cls");
             break;
         case 4:
             hapusData();
+            system("pause");
+            system("cls");
             break;
-        
+        case 5:
+            updateBarang();
+            system("pause");
+            system("cls");
+            break;
         case 6:
             break;
         default:
@@ -317,6 +337,7 @@ void tampilData()
 
 void cariBarang()
 {
+    system("cls");
     char keyword[1000];
 
     cout << "Masukkan kata kunci: ";
@@ -329,7 +350,6 @@ void cariBarang()
     cout << "\nHasil pencarian:\n";
     while (current != nullptr)
     {
-        // strstr cek apakah keyword ada di dalam nama barang
         if (strstr(current->Data.nama, keyword) != nullptr)
         {
             cout << "Nama\t: " << current->Data.nama << endl;
@@ -348,6 +368,7 @@ void cariBarang()
 
 void tambahData()
 {
+    system("cls");
     int jumlah;
 
     cout << "Jumlah data yang ingin ditambahkan: ";
@@ -380,6 +401,7 @@ void tambahData()
 
 void hapusData()
 {
+    system("cls");
     if (head == nullptr)
         return;
 
@@ -424,6 +446,7 @@ void hapusData()
 
 void updateBarang()
 {
+    system("cls");
     if (head == nullptr)
     {
         cout << "Data kosong!\n";
