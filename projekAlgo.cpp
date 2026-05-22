@@ -172,8 +172,6 @@ void transaksiPelanggan()
         return;
     }
 
-    
-
     cout << "Harga : " << current->Data.harga << endl;
     cout << "Stok  : " << current->Data.stok << endl;
     
@@ -201,7 +199,7 @@ void transaksiPelanggan()
     cout << "| " << left << setw(8) << "Harga" << ": " << setw(22) << current->Data.harga << "|\n",
     cout << "| " << left << setw(8) << "Jumlah" << ": " << setw(22) << jumlah << "|\n",
     cout << "-----------------------------------\n";
-    cout << "| " << "TOTAL  : " << left << setw(23) << total                                  << "|" << endl;
+    cout << "| " << "TOTAL  : " << left << setw(23) << total << "|" << endl;
     cout << "===================================\n";
     cout << setfill(' ');
 
