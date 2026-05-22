@@ -108,14 +108,14 @@ void menuUtama()
     {
         system("cls");
         cout << "\n";
-        cout << setfill('=') << setw(35) << "" << endl;
-        cout << setfill(' ') << "|" << right << setw(22) << "SWALAYAN A" << setw(12) << "|" << endl;
-        cout << setfill('=') << setw(35) << "" << endl;
+        cout << setfill('=') << setw(55) << "" << endl;
+        cout << setfill(' ') << "|" << right << setw(33) << "SWALAYAN A" << setw(21) << "|" << endl;
+        cout << setfill('=') << setw(55) << "" << endl;
         cout << setfill(' ');
-        cout << "| " << left << setw(32) << "1. Transaksi Pelanggan" << "|" << endl;
-        cout << "| " << left << setw(32) << "2. Kelola Data Barang" << "|" << endl;
-        cout << "| " << left << setw(32) << "3. Keluar" << "|" << endl;
-        cout << setfill('=') << setw(35) << "" << endl;
+        cout << "| " << left << setw(52) << "1. Transaksi Pelanggan" << "|" << endl;
+        cout << "| " << left << setw(52) << "2. Kelola Data Barang" << "|" << endl;
+        cout << "| " << left << setw(52) << "3. Keluar" << "|" << endl;
+        cout << setfill('=') << setw(55) << "" << endl;
         cout << setfill(' ');
         cout << "Pilih menu: ";
         cin >> pilihan;
@@ -144,65 +144,109 @@ void menuUtama()
 void transaksiPelanggan()
 {
     system("cls");
+
     if (head == nullptr)
     {
         cout << "Data barang kosong!\n";
         return;
     }
 
-    tampilData();
+    sorting();
 
-    char nama[1000];
-    int jumlah;
+    cout << setfill('=') << setw(55) << "" << endl;
+    cout << setfill(' ') << "|" << right << setw(34) << "TRANSAKSI PELANGGAN" << setw(20) << "|" << endl;
+    cout << setfill('=') << setw(55) << "" << endl;
+    cout << setfill(' ');
+    cout << "| " << left << setw(21) << "Nama" << setw(15) << "Harga" << setw(16) << "Stok" << "|" << endl;
+    cout << setfill('-') << setw(55) << "" << endl;
+    cout << setfill(' ');
 
-    cout << "Masukkan nama barang: ";
-    cin.ignore();
-    cin.getline(nama, 1000);
-
-    DataBarang *current = head;
-
-    while (current != nullptr && strcmp(current->Data.nama, nama) != 0)
+    DataBarang *bantu = head;
+    while (bantu != NULL)
     {
-        current = current->next;
+        cout << "| " << left << setw(21) << bantu->Data.nama
+             << setw(15) << bantu->Data.harga
+             << setw(16) << bantu->Data.stok << "|" << endl;
+
+        bantu = bantu->next;
     }
 
-    if (current == nullptr)
-    {
-        cout << "Barang tidak ditemukan!\n";
-        return;
-    }
+    cout << setfill('-') << setw(55) << "" << endl;
+    cout << setfill(' ');
 
-    cout << "Harga : " << current->Data.harga << endl;
-    cout << "Stok  : " << current->Data.stok << endl;
-    
-    cout << "Jumlah beli: ";
-    cin >> jumlah;
-    
-    if (jumlah > current->Data.stok)
-    {
-        cout << "Stok tidak cukup!\n";
-        return;
-    }
+    int jumlahBarang;
+    cout << "Berapa jenis barang yang dibeli? ";
+    cin >> jumlahBarang;
 
-    float total = jumlah * current->Data.harga;
-    current->Data.stok = current->Data.stok - jumlah;
+    char namaBeli[100][1000];
+    int jumlahBeli[100];
+    float hargaBeli[100];
+    int itemValid = 0;
+    float grandTotal = 0;
+
+    for (int i = 0; i < jumlahBarang; i++)
+    {
+        char nama[1000];
+        int jumlah;
+
+        cout << "\nMasukkan nama barang: ";
+        cin.ignore();
+        cin.getline(nama, 1000);
+
+        DataBarang *current = head;
+
+        while (current != nullptr && strcmp(current->Data.nama, nama) != 0)
+        {
+            current = current->next;
+        }
+
+        if (current == nullptr)
+        {
+            cout << "Barang tidak ditemukan!\n";
+            continue;
+        }
+        
+        cout << "Jumlah beli: ";
+        cin >> jumlah;
+        
+        if (jumlah > current->Data.stok)
+        {
+            cout << "Stok tidak cukup!\n";
+            continue;
+        }
+
+        strcpy(namaBeli[itemValid], current->Data.nama);
+        jumlahBeli[itemValid] = jumlah;
+        hargaBeli[itemValid] = current->Data.harga;
+        itemValid++;
+
+        grandTotal += jumlah * current->Data.harga;
+        current->Data.stok -= jumlah;
+    }
 
     rewriteFile();
 
     cout << "\n";
-    cout << "========== STRUK BELANJA ==========\n" << endl;
+    cout << setfill('=') << setw(55) << "" << endl;
+    cout << setfill(' ') << "|" << right << setw(33) << "STRUK BELANJA" << setw(21) << "|" << endl;
+    cout << setfill('=') << setw(55) << "" << endl;
     cout << setfill(' ');
-    cout << "-----------------------------------\n";
-    cout << "| " << left << setw(32) << "           SWALAYAN A" << "|\n";
-    cout << "-----------------------------------\n";
-    cout << "| " << left << setw(8) << "Nama" << ": " << setw(22) << current->Data.nama << "|\n",
-    cout << "| " << left << setw(8) << "Harga" << ": " << setw(22) << current->Data.harga << "|\n",
-    cout << "| " << left << setw(8) << "Jumlah" << ": " << setw(22) << jumlah << "|\n",
-    cout << "-----------------------------------\n";
-    cout << "| " << "TOTAL  : " << left << setw(23) << total << "|" << endl;
-    cout << "===================================\n";
+    cout << "| " << left << setw(21) << "Nama" << setw(15) << "Harga" << setw(16) << "Jumlah" << "|" << endl;
+    cout << setfill('-') << setw(55) << "" << endl;
     cout << setfill(' ');
 
+    for (int i = 0; i < itemValid; i++)
+    {
+        cout << "| " << left << setw(21) << namaBeli[i]
+             << setw(15) << hargaBeli[i]
+             << setw(16) << jumlahBeli[i] << "|" << endl;
+    }
+
+    cout << setfill('-') << setw(55) << "" << endl;
+    cout << setfill(' ');
+    cout << "| " << left << setw(10) << "TOTAL" << ": " << setw(40) << grandTotal << "|" << endl;
+    cout << setfill('=') << setw(55) << "" << endl;
+    cout << setfill(' ');
     cout << "Transaksi berhasil!\n\n";
 }
 
@@ -213,17 +257,17 @@ void kelolaData()
     {
         system("cls");
         cout << "\n";
-        cout << setfill('=') << setw(35) << "" << endl;
-        cout << setfill(' ') << "|" << right << setw(26) << "KELOLA DATA BARANG" << setw(8) << "|" << endl;
-        cout << setfill('=') << setw(35) << "" << endl;
+        cout << setfill('=') << setw(55) << "" << endl;
+        cout << setfill(' ') << "|" << right << setw(35) << "KELOLA DATA BARANG" << setw(19) << "|" << endl;
+        cout << setfill('=') << setw(55) << "" << endl;
         cout << setfill(' ');
-        cout << "| " << left << setw(32) << "1. Tampilkan Data Barang" << "|" << endl;
-        cout << "| " << left << setw(32) << "2. Cari Data Barang" << "|" << endl;
-        cout << "| " << left << setw(32) << "3. Tambah Data Barang" << "|" << endl;
-        cout << "| " << left << setw(32) << "4. Hapus Data Barang" << "|" << endl;
-        cout << "| " << left << setw(32) << "5. Update Barang" << "|" << endl;
-        cout << "| " << left << setw(32) << "6. Kembali ke Menu Utama" << "|" << endl;
-        cout << setfill('=') << setw(35) << "" << endl;
+        cout << "| " << left << setw(52) << "1. Tampilkan Data Barang" << "|" << endl;
+        cout << "| " << left << setw(52) << "2. Cari Data Barang" << "|" << endl;
+        cout << "| " << left << setw(52) << "3. Tambah Data Barang" << "|" << endl;
+        cout << "| " << left << setw(52) << "4. Hapus Data Barang" << "|" << endl;
+        cout << "| " << left << setw(52) << "5. Update Barang" << "|" << endl;
+        cout << "| " << left << setw(52) << "6. Kembali ke Menu Utama" << "|" << endl;
+        cout << setfill('=') << setw(55) << "" << endl;
         cout << setfill(' ');
         cout << "Pilih menu: ";
         cin >> pilihan;
@@ -295,6 +339,7 @@ void sorting()
 
 void tampilData()
 {
+    system("cls");
     sorting();
 
     DataBarang *bantu = head;
@@ -304,38 +349,35 @@ void tampilData()
         return;
     }
 
-    cout << setfill('=') << setw(50) << "" << endl;
-
-    cout << setfill(' ')
-         << "|" << right << setw(30) << "DATA BARANG" << setw(19) << "|" << endl;
-
-    cout << setfill('=') << setw(50) << "" << endl;
-
+    cout << setfill('=') << setw(55) << "" << endl;
+    cout << setfill(' ') << "|" << right << setw(33) << "DATA BARANG" << setw(21) << "|" << endl;
+    cout << setfill('=') << setw(55) << "" << endl;
     cout << setfill(' ');
-    cout << "|"
-         << left << setw(20) << "Nama" << "|"
-         << setw(13) << "Harga" << "|"
-         << setw(13) << "Stok" << "|" << endl;
-
-    cout << setfill('-') << setw(50) << "" << endl;
+    cout << "| " << left << setw(21) << "Nama" << setw(15) << "Harga" << setw(16) << "Stok" << "|" << endl;
+    cout << setfill('-') << setw(55) << "" << endl;
     cout << setfill(' ');
 
     while (bantu != NULL)
     {
-        cout << "|"
-             << left << setw(20) << bantu->Data.nama << "|"
-             << setw(13) << bantu->Data.harga << "|"
-             << setw(13) << bantu->Data.stok << "|" << endl;
+        cout << "| " << left << setw(21) << bantu->Data.nama
+             << setw(15) << bantu->Data.harga
+             << setw(16) << bantu->Data.stok << "|" << endl;
 
         bantu = bantu->next;
     }
 
-    cout << setfill('=') << setw(50) << "" << endl;
+    cout << setfill('=') << setw(55) << "" << endl;
+    cout << setfill(' ');
 }
 
 void cariBarang()
 {
     system("cls");
+    cout << setfill('=') << setw(55) << "" << endl;
+    cout << setfill(' ') << "|" << right << setw(33) << "CARI DATA BARANG" << setw(21) << "|" << endl;
+    cout << setfill('=') << setw(55) << "" << endl;
+    cout << setfill(' ');
+
     char keyword[1000];
 
     cout << "Masukkan kata kunci: ";
@@ -345,28 +387,41 @@ void cariBarang()
     DataBarang *current = head;
     int ketemu = 0;
 
-    cout << "\nHasil pencarian:\n";
+    cout << "\n";
+    cout << setfill('-') << setw(55) << "" << endl;
+    cout << setfill(' ');
+
     while (current != nullptr)
     {
         if (strstr(current->Data.nama, keyword) != nullptr)
         {
-            cout << "Nama\t: " << current->Data.nama << endl;
-            cout << "Harga\t: " << current->Data.harga << endl;
-            cout << "Stok\t: " << current->Data.stok << endl;
+            cout << "| " << left << setw(10) << "Nama"  << ": " << setw(40) << current->Data.nama  << "|" << endl;
+            cout << "| " << left << setw(10) << "Harga"  << ": " << setw(40) << current->Data.harga  << "|" << endl;
+            cout << "| " << left << setw(10) << "Stok"  << ": " << setw(40) << current->Data.stok  << "|" << endl;
+            cout << setfill('-') << setw(55) << "" << endl;
+            cout << setfill(' ');
             ketemu++;
         }
         current = current->next;
     }
 
     if (ketemu == 0)
-        cout << "Barang tidak ditemukan!\n";
+        cout << "| " << left << setw(52) << "Barang tidak ditemukan!" << "|" << endl;
     else
-        cout << ketemu << " barang ditemukan.\n";
+        cout << "| " << setw(3) << ketemu << left << setw(48) << " barang ditemukan." << " |" << endl;
+
+    cout << setfill('=') << setw(55) << "" << endl;
+    cout << setfill(' ');
 }     
 
 void tambahData()
 {
     system("cls");
+    cout << setfill('=') << setw(55) << "" << endl;
+    cout << setfill(' ') << "|" << right << setw(34) << "TAMBAH DATA BARANG" << setw(20) << "|" << endl;
+    cout << setfill('=') << setw(55) << "" << endl;
+    cout << setfill(' ');
+
     int jumlah;
 
     cout << "Jumlah data yang ingin ditambahkan: ";
@@ -400,6 +455,11 @@ void tambahData()
 void hapusData()
 {
     system("cls");
+    cout << setfill('=') << setw(55) << "" << endl;
+    cout << setfill(' ') << "|" << right << setw(33) << "HAPUS DATA BARANG" << setw(21) << "|" << endl;
+    cout << setfill('=') << setw(55) << "" << endl;
+    cout << setfill(' ');
+
     if (head == nullptr)
         return;
 
@@ -415,6 +475,7 @@ void hapusData()
         head = head->next;
 
         delete toDeleteNode;
+        rewriteFile();
         cout << "Data berhasil dihapus!\n";
         return;
     }
@@ -445,6 +506,11 @@ void hapusData()
 void updateBarang()
 {
     system("cls");
+    cout << setfill('=') << setw(55) << "" << endl;
+    cout << setfill(' ') << "|" << right << setw(31) << "UPDATE BARANG" << setw(23) << "|" << endl;
+    cout << setfill('=') << setw(55) << "" << endl;
+    cout << setfill(' ');
+
     if (head == nullptr)
     {
         cout << "Data kosong!\n";
