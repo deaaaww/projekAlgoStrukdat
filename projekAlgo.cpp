@@ -421,3 +421,52 @@ void hapusData()
 
     cout << "Data berhasil dihapus!\n";
 }
+
+void updateBarang()
+{
+    if (head == nullptr)
+    {
+        cout << "Data kosong!\n";
+        return;
+    }
+
+    char nama[1000];
+
+    cin.ignore();
+    cout << "Masukkan nama barang yang ingin diupdate: ";
+    cin.getline(nama, 1000);
+
+    DataBarang *current = head;
+
+    while (current != nullptr && strcmp(current->Data.nama, nama) != 0)
+    {
+        current = current->next;
+    }
+
+    if (current == nullptr)
+    {
+        cout << "Barang tidak ditemukan!\n";
+        return;
+    }
+
+    char namaBaru[1000];
+    float hargaBaru;
+    int stokBaru;
+
+    cout << "Nama baru  : ";
+    cin.getline(namaBaru, 1000);
+
+    cout << "Harga baru : ";
+    cin >> hargaBaru;
+
+    cout << "Stok baru  : ";
+    cin >> stokBaru;
+
+    strcpy(current->Data.nama, namaBaru);
+    current->Data.harga = hargaBaru;
+    current->Data.stok = stokBaru;
+
+    rewriteFile();
+
+    cout << "Data berhasil diupdate!\n";
+}
